@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "test": "node --test tests/*.test.js tests/*.test.mjs",
+    "dev": "node scripts/serve.mjs",
+    "icons": "node scripts/make-icons.mjs",
     "build:seed": "node scripts/build-seed.mjs",
     "gas:push": "node scripts/build-seed.mjs && clasp push --user teewangwangland",
     "gas:status": "clasp status --user teewangwangland"
