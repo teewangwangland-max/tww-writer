@@ -81,7 +81,11 @@ function append_(tab, obj) {
     var v = obj[headers[i]];
     row.push(v === undefined || v === null ? '' : v);
   }
-  sheet_(tab).appendRow(row);
+  var sheet = sheet_(tab);
+  sheet.appendRow(row);
+  // callers update the new row right after appending (e.g. doc_url), so expose its row number;
+  // safe because every write runs inside withLock_
+  obj._row = sheet.getLastRow();
   return obj;
 }
 

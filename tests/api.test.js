@@ -435,3 +435,21 @@ test('11. router: unknown action, oversized body, and a non-ApiError throw', () 
   assert.equal(boom.ok, false);
   assert.equal(boom.error, 'SERVER_ERROR');
 });
+
+// Regression: a brand-new post saved with createDoc/saveAsExample in ONE call must update its own
+// freshly appended row (production failed with getRange(null, …) because append_ returned no row number).
+test('12. new post + createDoc + saveAsExample in one call updates the appended row', () => {
+  const { env, ctx } = boot();
+  createUser(ctx, env, 'userN', 'test-pass-123', 'User N', 'writer');
+  const token = login(ctx, 'userN', 'test-pass-123').data.token;
+  const res = call(ctx, 'posts.save', {
+    token: token,
+    post: { format_id: 'fmt-x', project_name: 'Fresh', body: 'fresh body' },
+    createDoc: true,
+    saveAsExample: true
+  });
+  assert.equal(res.ok, true, JSON.stringify(res));
+  assert.ok(res.data.post.doc_url, 'doc_url returned');
+  const again = call(ctx, 'posts.get', { token: token, post_id: res.data.post.post_id });
+  assert.equal(again.data.doc_url, res.data.post.doc_url, 'doc_url persisted on the new row');
+});

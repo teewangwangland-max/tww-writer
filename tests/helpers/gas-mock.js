@@ -54,6 +54,10 @@ function createMockEnv() {
         return max;
       },
       getRange(r, c, nr, nc) {
+        // Real Apps Script rejects non-integer coordinates; mirror that so null row numbers fail in tests.
+        for (const v of [r, c]) {
+          if (!Number.isInteger(v) || v < 1) throw new Error('getRange: invalid coordinate ' + v);
+        }
         nr = nr === undefined ? 1 : nr;
         nc = nc === undefined ? 1 : nc;
         return {
