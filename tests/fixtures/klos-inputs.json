@@ -1,0 +1,8 @@
+{
+  "project_name": "KLOS บางแค", "location": "บางแค", "plot": "1-1-81.7", "zoning": "ส้ม",
+  "far": 7, "bonus_pct": 20, "eff_pct": 51, "build_cost_sqm": 28000, "land_price_sqwa": "300,000",
+  "gp_pct": 32, "sale_price_sqm": 100000, "loft_factor": 1.4,
+  "case_inputs": { "low": { "loft_pct": 0 }, "mid": { "loft_pct": 30 }, "high": { "loft_pct": 70 } },
+  "comps": [ {"name":"A","price_per_sqm":78000}, {"name":"B","price_per_sqm":95000}, {"name":"C","price_per_sqm":87000},
+             {"name":"D","price_per_sqm":105000}, {"name":"E","price_per_sqm":86000} ]
+}
