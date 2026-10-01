@@ -85,3 +85,25 @@ test('index.html has no absolute-path assets', () => {
   const html = fs.readFileSync(path.join(WEB, 'index.html'), 'utf8');
   assert.ok(!/(href|src)="\/(?!\/)/.test(html));
 });
+
+test('UI files stay spec-driven (no format-specific words)', () => {
+  const ui = all.filter((f) => {
+    const rel = path.relative(WEB, f).split(path.sep).join('/');
+    return /^js\/views\/[^/]+\.js$/.test(rel) || /^js\/(fields|results-view|checker-view)\.js$/.test(rel) || /^js\/wizard[^/]*\.js$/.test(rel);
+  });
+  assert.ok(ui.length >= 8);
+  for (const f of ui) {
+    const src = fs.readFileSync(f, 'utf8').toLowerCase();
+    for (const w of ['feasibility', 'loft', 'gfa', 'nsa']) {
+      assert.ok(!src.includes(w), `${path.relative(WEB, f)} contains "${w}"`);
+    }
+  }
+});
+
+test('fetch( appears only in api.js and sw.js', () => {
+  for (const f of all.filter((x) => /\.js$/.test(x))) {
+    const rel = path.relative(WEB, f).split(path.sep).join('/');
+    if (rel === 'js/api.js' || rel === 'sw.js') continue;
+    assert.ok(!fs.readFileSync(f, 'utf8').includes('fetch('), `fetch( in ${rel}`);
+  }
+});

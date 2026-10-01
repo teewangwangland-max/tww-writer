@@ -306,18 +306,19 @@ export function checkPost(text, spec, result, inputs) {
   }
 
   function processCheck(check) {
-    stats.checked++;
     const formula = (spec.formulas || []).find((f) => !f.module && f.key === check.key);
     if (!formula) return;
     const isPerCase = !!check.per_case;
     const caseIds = (spec.cases || []).map((c) => c.id);
 
     let anyCandidateFound = false;
-    let anyOk = false;
 
     const targets = isPerCase ? caseIds : ['__global__'];
 
     for (const target of targets) {
+      stats.checked++;
+      let targetOk = false;
+      let targetBad = false;
       const expected = isPerCase ? result.values[`${target}.${check.key}`] : result.values[check.key];
       const scanZones = isPerCase ? zones.filter((z) => z.caseId === target) : zones;
 
@@ -340,7 +341,7 @@ export function checkPost(text, spec, result, inputs) {
 
             const matchToken = candidates.find((t) => typeof expected === 'number' && withinTolerance(t, expected));
             if (matchToken) {
-              anyOk = true;
+              targetOk = true;
               continue;
             }
             // does every candidate match some other known value?
@@ -350,6 +351,7 @@ export function checkPost(text, spec, result, inputs) {
             }
             const bad = candidates.find((t) => !matchesAnyKnown(t, zoneKnown));
             if (bad && typeof expected === 'number') {
+              targetBad = true;
               const expectedText = computeExpectedText(expected, bad, formula);
               addIssue({
                 severity: 'error',
@@ -367,6 +369,8 @@ export function checkPost(text, spec, result, inputs) {
           }
         }
       }
+      // a check-target counts as OK only when it matched somewhere and had no mismatch
+      if (targetOk && !targetBad) stats.ok++;
     }
 
     if (!anyCandidateFound) {
@@ -377,8 +381,6 @@ export function checkPost(text, spec, result, inputs) {
       } else {
         addIssue({ severity: 'info', type: 'missing', checkKey: check.key });
       }
-    } else if (anyOk) {
-      stats.ok++;
     }
   }
 

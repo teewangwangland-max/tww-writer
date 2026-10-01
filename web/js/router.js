@@ -3,12 +3,17 @@ import { clear } from './dom.js';
 import { renderLogin } from './views/login.js';
 import { renderLibrary } from './views/library.js';
 import { renderPlaceholder } from './views/placeholder.js';
+import { renderPickFormat } from './views/pick-format.js';
+import { renderWizard } from './views/wizard.js';
+import { renderPostView } from './views/post-view.js';
 
 const ROUTES = [
   { pattern: /^\/login$/, view: (el) => renderLogin(el), public: true },
   { pattern: /^\/$/, view: (el) => renderLibrary(el) },
-  { pattern: /^\/new$/, view: (el) => renderPlaceholder(el, 'เขียนโพสต์ใหม่', 'เลือกรูปแบบโพสต์ (กำลังสร้าง)') },
-  { pattern: /^\/post\/([^/]+)$/, view: (el, p) => renderPlaceholder(el, 'โพสต์', 'ดูโพสต์ (กำลังสร้าง)', p), params: ['id'] },
+  { pattern: /^\/new$/, view: (el) => renderPickFormat(el) },
+  { pattern: /^\/new\/([^/]+)$/, view: (el, p) => renderWizard(el, p, 'new'), params: ['formatId'] },
+  { pattern: /^\/edit\/([^/]+)$/, view: (el, p) => renderWizard(el, p, 'edit'), params: ['postId'] },
+  { pattern: /^\/post\/([^/]+)$/, view: (el, p) => renderPostView(el, p), params: ['id'] },
   { pattern: /^\/admin\/formats$/, view: (el) => renderPlaceholder(el, 'ถอดรูปแบบ', 'ถอดรูปแบบ (กำลังสร้าง)'), admin: true },
   { pattern: /^\/style$/, view: (el) => renderPlaceholder(el, 'สไตล์ของฉัน', 'Style DNA (กำลังสร้าง)') },
 ];
