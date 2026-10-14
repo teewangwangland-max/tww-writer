@@ -94,7 +94,7 @@ test('UI files stay spec-driven (no format-specific words)', () => {
   assert.ok(ui.length >= 8);
   for (const f of ui) {
     const src = fs.readFileSync(f, 'utf8').toLowerCase();
-    for (const w of ['feasibility', 'loft', 'gfa', 'nsa']) {
+    for (const w of ['feasibility', 'loft', 'gfa', 'nsa', 'rental', 'yield']) {
       assert.ok(!src.includes(w), `${path.relative(WEB, f)} contains "${w}"`);
     }
   }

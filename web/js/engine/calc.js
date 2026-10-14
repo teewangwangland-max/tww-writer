@@ -224,7 +224,9 @@ export function compute(spec, inputs) {
   });
 
   let summary = '';
-  if (spec.summary && spec.summary.per_case_key) {
+  if (spec.summary && spec.summary.key && !spec.summary.per_case_key) {
+    summary = display[spec.summary.key] !== undefined ? display[spec.summary.key] : '';
+  } else if (spec.summary && spec.summary.per_case_key) {
     const key = spec.summary.per_case_key;
     summary = caseIds
       .map((id) => {

@@ -12,7 +12,9 @@ export function renderPickFormat(el) {
     for (const f of formats) {
       listEl.appendChild(h('a', { class: 'card', href: '#/new/' + encodeURIComponent(f.format_id) },
         h('h2', { class: 'card-title' }, f.name || f.format_id),
-        h('div', { class: 'card-meta' }, h('span', { class: 'num' }, 'v' + f.version))));
+        h('div', { class: 'card-meta' },
+          h('span', { class: 'num' }, 'v' + f.version),
+          f.status === 'draft' ? h('span', { class: 'pill' }, 'ร่าง') : null)));
     }
   }
 

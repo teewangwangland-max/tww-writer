@@ -40,13 +40,14 @@ function valueNode(row, verdictKey) {
 // result: compute() output; spec: format spec.
 export function renderResults(result, spec) {
   const verdictKey = spec && spec.summary ? spec.summary.per_case_key : null;
+  const globalVerdictKey = spec && spec.summary ? spec.summary.key : null;
   const root = h('div', { class: 'results' });
   if (result.summary) root.appendChild(summaryNode(result.summary));
 
   if ((result.global || []).length) {
     root.appendChild(h('h2', { class: 'sub-h' }, 'ผลรวม'));
     root.appendChild(h('table', { class: 'grid kv' },
-      h('tbody', null, result.global.map((r) => h('tr', null, h('th', { scope: 'row' }, r.label), h('td', { class: 'num-cell' }, valueNode(r, null)))))));
+      h('tbody', null, result.global.map((r) => h('tr', null, h('th', { scope: 'row' }, r.label), h('td', { class: 'num-cell' }, valueNode(r, globalVerdictKey)))))));
   }
 
   const cases = result.cases || [];

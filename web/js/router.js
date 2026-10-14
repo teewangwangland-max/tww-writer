@@ -3,6 +3,8 @@ import { clear } from './dom.js';
 import { renderLogin } from './views/login.js';
 import { renderLibrary } from './views/library.js';
 import { renderPlaceholder } from './views/placeholder.js';
+import { renderAdminFormats } from './views/admin-formats.js';
+import { renderFormatExtract } from './views/format-extract.js';
 import { renderPickFormat } from './views/pick-format.js';
 import { renderWizard } from './views/wizard.js';
 import { renderPostView } from './views/post-view.js';
@@ -14,7 +16,9 @@ const ROUTES = [
   { pattern: /^\/new\/([^/]+)$/, view: (el, p) => renderWizard(el, p, 'new'), params: ['formatId'] },
   { pattern: /^\/edit\/([^/]+)$/, view: (el, p) => renderWizard(el, p, 'edit'), params: ['postId'] },
   { pattern: /^\/post\/([^/]+)$/, view: (el, p) => renderPostView(el, p), params: ['id'] },
-  { pattern: /^\/admin\/formats$/, view: (el) => renderPlaceholder(el, 'ถอดรูปแบบ', 'ถอดรูปแบบ (กำลังสร้าง)'), admin: true },
+  { pattern: /^\/admin\/formats$/, view: (el) => renderAdminFormats(el), admin: true },
+  { pattern: /^\/admin\/formats\/new$/, view: (el) => renderFormatExtract(el, {}), admin: true },
+  { pattern: /^\/admin\/formats\/edit\/([^/]+)$/, view: (el, p) => renderFormatExtract(el, p), params: ['formatId'], admin: true },
   { pattern: /^\/style$/, view: (el) => renderPlaceholder(el, 'สไตล์ของฉัน', 'Style DNA (กำลังสร้าง)') },
 ];
 

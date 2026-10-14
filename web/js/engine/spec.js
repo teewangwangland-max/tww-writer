@@ -174,6 +174,21 @@ export function validateSpec(spec) {
     }
   }
 
+  if (spec.summary && typeof spec.summary === 'object') {
+    const sk = spec.summary.key;
+    if (sk !== undefined && !spec.summary.per_case_key) {
+      if (!formulaShowByKey.has(sk) || formulaPerCaseByKey.get(sk)) {
+        errors.push(`summary.key "${sk}" must reference an existing global formula`);
+      }
+    }
+    const pk = spec.summary.per_case_key;
+    if (pk !== undefined) {
+      if (!formulaShowByKey.has(pk) || !formulaPerCaseByKey.get(pk)) {
+        errors.push(`summary.per_case_key "${pk}" must reference a per-case formula`);
+      }
+    }
+  }
+
   for (const check of checks) {
     if (!check || typeof check !== 'object') continue;
     const key = check.key;

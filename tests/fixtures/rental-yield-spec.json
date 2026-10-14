@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "id": "rental-yield",
+  "name": "Rental Yield คอนโด",
+  "description": "คอนโดซื้อปล่อยเช่า คุ้มไหม ดู yield และระยะคืนทุน",
+  "fields": [
+    { "key": "project_name", "label": "ชื่อโครงการ", "type": "text", "required": true },
+    { "key": "location", "label": "ทำเล", "type": "text" },
+    { "key": "unit_price", "label": "ราคาซื้อ", "type": "number", "unit": "บาท", "required": true },
+    { "key": "size_sqm", "label": "ขนาดห้อง", "type": "number", "unit": "ตร.ม.", "required": true },
+    { "key": "rent_month", "label": "ค่าเช่า/เดือน", "type": "number", "unit": "บาท", "required": true },
+    { "key": "common_fee_sqm", "label": "ค่าส่วนกลาง/ตร.ม./เดือน", "type": "number", "unit": "บาท", "default": 0 },
+    { "key": "vacancy_months", "label": "เดือนที่ห้องว่างต่อปี", "type": "number", "default": 1 }
+  ],
+  "cases": [],
+  "formulas": [
+    { "key": "price_sqm", "label": "ราคาต่อตร.ม.", "expr": "unit_price/size_sqm", "format": { "type": "int", "suffix": " บาท/ตร.ม." } },
+    { "key": "rent_year", "label": "ค่าเช่าต่อปี", "expr": "rent_month*(12-vacancy_months)", "format": { "type": "int", "suffix": " บาท" } },
+    { "key": "common_year", "label": "ค่าส่วนกลางต่อปี", "expr": "common_fee_sqm*size_sqm*12", "format": { "type": "int", "suffix": " บาท" } },
+    { "key": "net_year", "label": "รายได้สุทธิต่อปี", "expr": "rent_year - common_year", "format": { "type": "int", "suffix": " บาท" } },
+    { "key": "gross_yield", "label": "Gross yield", "expr": "rent_month*12/unit_price*100", "format": { "type": "percent", "dp": 2, "suffix": "%" } },
+    { "key": "net_yield", "label": "Net yield", "expr": "net_year/unit_price*100", "format": { "type": "percent", "dp": 2, "suffix": "%" } },
+    { "key": "payback_years", "label": "ระยะคืนทุน", "expr": "unit_price/net_year", "format": { "type": "number", "dp": 1, "suffix": " ปี" } },
+    { "key": "verdict", "label": "สรุป", "expr": "if(net_yield >= 5, \"คุ้ม\", if(net_yield >= 3, \"รอด\", \"ไม่รอด\"))", "format": { "type": "text" } }
+  ],
+  "summary": { "key": "verdict" },
+  "notes": [
+    "yield นี้ยังไม่หักภาษีและค่าซ่อมแซม"
+  ],
+  "narrative_fields": [
+    { "key": "hook", "label": "มุม Hook" },
+    { "key": "gossip", "label": "ข่าว/ซุบซิบโครงการ" },
+    { "key": "audience", "label": "กลุ่มลูกค้า/บริบทตลาด" },
+    { "key": "assumption_reasons", "label": "เหตุผลของสมมติฐาน" }
+  ],
+  "tone_options": [
+    { "key": "page_hashtags", "label": "hashtag ประจำเพจ", "instruction": "ใส่ hashtag ประจำเพจจาก House Style ไว้ท้ายโพสต์" }
+  ],
+  "sections": [
+    { "id": "s1", "title": "Hook", "guide": "เปิดโพสต์ด้วยประโยคชวนติดตามที่โยงกับการลงทุนซื้อคอนโดปล่อยเช่า" },
+    { "id": "s2", "title": "แนะนำโครงการและทำเล", "guide": "บอกว่าโครงการคืออะไร อยู่ทำเลไหน และเหมาะกับผู้เช่ากลุ่มใด" },
+    { "id": "s3", "title": "สมมติฐานค่าเช่าและค่าใช้จ่าย", "guide": "ระบุราคาซื้อ ค่าเช่า เดือนที่ห้องว่าง และค่าส่วนกลางที่ใช้คำนวณ" },
+    { "id": "s4", "title": "คำนวณ yield", "guide": "แสดงค่าเช่าต่อปี ค่าส่วนกลาง รายได้สุทธิ Gross yield และ Net yield ทีละขั้น" },
+    { "id": "s5", "title": "สรุปคุ้มไหม", "guide": "สรุปว่า yield และระยะคืนทุนที่ได้ถือว่าคุ้มหรือไม่" },
+    { "id": "s6", "title": "CTA และ hashtag", "guide": "ปิดท้ายด้วยคำชวนคอมเมนต์หรือติดตาม พร้อม hashtag ประจำเพจ" }
+  ],
+  "checks": [
+    { "key": "price_sqm", "keywords": ["ตกตารางเมตรละ"] },
+    { "key": "rent_year", "keywords": ["ค่าเช่าปีละ"] },
+    { "key": "common_year", "keywords": ["ส่วนกลาง"] },
+    { "key": "net_year", "keywords": ["สุทธิ"] },
+    { "key": "gross_yield", "keywords": ["Gross yield"] },
+    { "key": "net_yield", "keywords": ["Net yield"] },
+    { "key": "payback_years", "keywords": ["คืนทุน"] }
+  ],
+  "sample_inputs": {
+    "project_name": "คอนโดตัวอย่าง",
+    "location": "อารีย์",
+    "unit_price": 3500000,
+    "size_sqm": 35,
+    "rent_month": 15000,
+    "common_fee_sqm": 60,
+    "vacancy_months": 1
+  }
+}

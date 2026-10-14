@@ -1,4 +1,4 @@
-const CACHE = 'tww-shell-v0.4.1';
+const CACHE = 'tww-shell-v0.5.0';
 const FONT_CACHE = 'tww-fonts';
 const SHELL = [
   './',
@@ -22,6 +22,9 @@ const SHELL = [
   'js/views/pick-format.js',
   'js/views/wizard.js',
   'js/views/post-view.js',
+  'js/views/admin-formats.js',
+  'js/views/format-extract.js',
+  'js/spec-json.js',
   'js/wizard-state.js',
   'js/formats.js',
   'js/fields.js',
@@ -30,6 +33,8 @@ const SHELL = [
   'js/prompt-data.js',
   'js/clipboard.js',
   'js/prompt/build-write.js',
+  'js/prompt/build-extract.js',
+  'js/prompt/spec-schema-doc.js',
   'js/prompt/house-default.js',
   'js/engine/calc.js',
   'js/engine/expr.js',
