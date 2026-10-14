@@ -2,7 +2,8 @@ import * as store from './store.js';
 import { clear } from './dom.js';
 import { renderLogin } from './views/login.js';
 import { renderLibrary } from './views/library.js';
-import { renderPlaceholder } from './views/placeholder.js';
+import { renderStyle } from './views/style.js';
+import { renderStyleHouse } from './views/style-house.js';
 import { renderAdminFormats } from './views/admin-formats.js';
 import { renderFormatExtract } from './views/format-extract.js';
 import { renderPickFormat } from './views/pick-format.js';
@@ -19,7 +20,8 @@ const ROUTES = [
   { pattern: /^\/admin\/formats$/, view: (el) => renderAdminFormats(el), admin: true },
   { pattern: /^\/admin\/formats\/new$/, view: (el) => renderFormatExtract(el, {}), admin: true },
   { pattern: /^\/admin\/formats\/edit\/([^/]+)$/, view: (el, p) => renderFormatExtract(el, p), params: ['formatId'], admin: true },
-  { pattern: /^\/style$/, view: (el) => renderPlaceholder(el, 'สไตล์ของฉัน', 'Style DNA (กำลังสร้าง)') },
+  { pattern: /^\/style$/, view: (el) => renderStyle(el) },
+  { pattern: /^\/style\/house$/, view: (el) => renderStyleHouse(el), admin: true },
 ];
 
 export function currentPath() {

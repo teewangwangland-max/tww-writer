@@ -1,4 +1,4 @@
-const CACHE = 'tww-shell-v0.5.0';
+const CACHE = 'tww-shell-v0.6.0';
 const FONT_CACHE = 'tww-fonts';
 const SHELL = [
   './',
@@ -19,6 +19,12 @@ const SHELL = [
   'js/views/login.js',
   'js/views/library.js',
   'js/views/placeholder.js',
+  'js/views/style.js',
+  'js/views/style-house.js',
+  'js/style/dna-editor.js',
+  'js/style/dna-update.js',
+  'js/style/examples-panel.js',
+  'js/prompt/build-dna.js',
   'js/views/pick-format.js',
   'js/views/wizard.js',
   'js/views/post-view.js',

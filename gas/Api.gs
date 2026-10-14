@@ -26,6 +26,7 @@ var ROUTES = {
 
   'examples.list': { auth: 'user', fn: examplesList_ },
   'examples.add': { auth: 'user', fn: examplesAdd_ },
+  'examples.update': { auth: 'user', fn: examplesUpdate_ },
   'examples.importDoc': { auth: 'user', fn: examplesImportDoc_ },
   'examples.importFolder': { auth: 'admin', fn: examplesImportFolder_ },
 

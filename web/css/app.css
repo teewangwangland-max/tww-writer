@@ -265,3 +265,22 @@ textarea.input { resize: vertical; line-height: 1.5; }
 .error-list { margin: 0; padding-left: 20px; color: var(--bad); display: flex; flex-direction: column; gap: 4px; overflow-wrap: anywhere; }
 .ok-text { color: var(--ok); font-weight: 500; }
 .extract .grid td, .extract .grid th { font-size: 14px; }
+
+/* P6 style screens */
+.style-section { display: flex; flex-direction: column; gap: var(--gap); padding-top: 8px; border-top: 1px solid var(--ink-12); }
+.dna-editor, .dna-update, .examples-panel, .folder-import { display: flex; flex-direction: column; gap: var(--gap); }
+.dna-form, .dna-sections, .version-list, .add-area, .diff { display: flex; flex-direction: column; gap: var(--gap); }
+.dna-head { font-weight: 500; }
+.dna-text { white-space: pre-wrap; overflow-wrap: anywhere; }
+.version-item { gap: 6px; }
+.version-log { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 14px; }
+.card.dimmed { opacity: 0.6; }
+.diff-field { padding: 8px 12px; background: var(--card); border: 1px solid var(--ink-12); border-radius: var(--radius); display: flex; flex-direction: column; gap: 4px; }
+.diff-cols { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
+.diff-list { margin: 0; padding-left: 16px; display: flex; flex-direction: column; gap: 4px; overflow-wrap: anywhere; }
+.diff-tag { font-weight: 500; color: var(--ink-60); font-size: 14px; }
+.diff-added { color: #4F6128; font-weight: 500; list-style: none; margin-left: -16px; }
+.diff-removed { color: #B3261E; text-decoration: line-through; list-style: none; margin-left: -16px; }
+.diff-new { color: #4F6128; }
+.dna-update select.input, .examples-panel select.input, .folder-import select.input { min-height: var(--tap); }
+.examples-panel .link-btn, .dna-editor .link-btn { min-height: var(--tap); }

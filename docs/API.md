@@ -173,15 +173,30 @@ health check: `{ ok: true, app, version }`.
 
 ## `examples.list`
 - Auth: user
-- Request: `{ token, format_id?, owner? }` (`owner` may be a `user_id` or `HOUSE`)
-- Response `data`: active examples, newest first, `body` included, max 100.
+- Request: `{ token, format_id?, owner?, include_hidden? }` (`owner` may be a `user_id` or `HOUSE`)
+- Response `data`: examples, newest first, `body` included, max 100. Each row includes
+  `active` (boolean). By default only active rows. With `include_hidden: true`,
+  inactive rows are also returned, but only those the caller may manage (owner is
+  the caller, or the caller is admin); other inactive rows stay excluded.
 
 ## `examples.add`
 - Auth: user
-- Request: `{ token, owner?, format_id, title, body }`
+- Request: `{ token, owner?, format_id, title, body, source?, source_ref? }`
   - `owner` defaults to you. `owner: 'HOUSE'` requires admin. Another user's id → `FORBIDDEN`.
+  - `source` defaults to `'manual'`, `source_ref` to `''` (used by "promote to House":
+    `source: 'promoted', source_ref: <original example_id>`).
 - Response `data`: the created Example row.
 - Errors: `BAD_INPUT`, `FORBIDDEN`
+
+## `examples.update`
+- Auth: user
+- Request: `{ token, example_id, active?, format_id?, title? }`
+  - Caller must own the example, or be admin (any owner including `HOUSE`), else `FORBIDDEN`.
+  - `title`: non-empty, ≤ 200 chars. `format_id`: string ≤ 100 chars (`''` = unspecified).
+    `active`: boolean (`false` hides; nothing is ever deleted).
+  - Only the given columns of that row are changed.
+- Response `data`: the updated Example row (with boolean `active`).
+- Errors: `BAD_INPUT`, `FORBIDDEN`, `NOT_FOUND`
 
 ## `examples.importDoc`
 - Auth: user

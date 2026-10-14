@@ -29,6 +29,7 @@ function renderHeader(route) {
   const user = store.getUser();
   const links = [h('a', { class: 'link-btn', href: '#/style' }, 'สไตล์ของฉัน')];
   if (user && user.role === 'admin') {
+    links.push(h('a', { class: 'link-btn', href: '#/style/house' }, 'House Style'));
     links.push(h('a', { class: 'link-btn', href: '#/admin/formats' }, 'ถอดรูปแบบ'));
   }
   headerEl.appendChild(h('div', { class: 'header-inner' },
