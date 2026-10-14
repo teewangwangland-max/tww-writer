@@ -512,7 +512,12 @@ export async function renderWizard(el, params, mode) {
       post_status: status,
       case_summary: r.summary,
       inputs,
-      results: { values: r.values, display: r.display, summary: r.summary, format_version: ctx.info.version },
+      results: {
+        values: r.values, display: r.display, summary: r.summary, format_version: ctx.info.version,
+        // labelled rows so the post view can render properly even before/without the spec
+        global: r.global, cases: r.cases,
+        verdict_key: ctx.info.spec.summary ? ctx.info.spec.summary.per_case_key : null,
+      },
       narrative: state.narrative,
       tone: state.tone,
       body: state.body || '',

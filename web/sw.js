@@ -1,4 +1,4 @@
-const CACHE = 'tww-shell-v0.4.0';
+const CACHE = 'tww-shell-v0.4.1';
 const FONT_CACHE = 'tww-fonts';
 const SHELL = [
   './',

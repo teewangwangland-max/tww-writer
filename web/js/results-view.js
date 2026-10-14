@@ -84,6 +84,10 @@ export function renderResults(result, spec) {
 export function renderStoredResults(results) {
   const root = h('div', { class: 'results' });
   if (!results) return root;
+  // Posts saved since v0.4.1 carry labelled rows: render them like a live result.
+  if (Array.isArray(results.global) || Array.isArray(results.cases)) {
+    return renderResults(results, results.verdict_key ? { summary: { per_case_key: results.verdict_key } } : null);
+  }
   if (results.summary) root.appendChild(summaryNode(results.summary));
   const entries = Object.entries(results.display || {});
   if (entries.length) {
